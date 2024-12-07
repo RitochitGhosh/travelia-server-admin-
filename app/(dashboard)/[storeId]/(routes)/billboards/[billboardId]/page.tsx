@@ -1,21 +1,24 @@
 import prismadb from "@/lib/prismadb";
 import { BillboardForm } from "./components/billboard-form";
+import { NextPage } from "next";
 
-// No need to explicitly define `BillboardPageProps` because Next.js will handle that
-const BillboardPage = async ({ params }: { params: { billboardId: string } }) => {
-  // Fetch the billboard data from the database
+interface BillboardPageProps {
+  params: {
+    billboardId: string;
+  };
+}
+
+const BillboardPage: NextPage<BillboardPageProps> = async ({ params }) => {
   const billboard = await prismadb.billboard.findUnique({
     where: {
-      id: params.billboardId, // Using the billboardId from params
+      id: params.billboardId,
     },
   });
 
-  // Check if the billboard exists
   if (!billboard) {
     return <div>Billboard not found</div>;
   }
 
-  // Render the BillboardForm component with the initial data
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
