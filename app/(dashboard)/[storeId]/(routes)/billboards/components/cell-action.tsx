@@ -41,7 +41,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       toast.success("Billboard deleted");
     } catch (error: unknown) {
       if (error instanceof Error) {
-        console.log("[ERROR] ->", error.message);
+        console.log("[ERROR] ->", error);
       }
       toast.error(
         "Make sure you removed all packages using this billboard first."
