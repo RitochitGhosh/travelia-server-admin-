@@ -85,23 +85,23 @@ model Duration {
 }
 
 model Package {
-    id         String    @id @default(uuid())
-    storeId    String
-    store      Store     @relation("StoreToPackage", fields: [storeId], references: [id])
-    categoryId String
-    category   Category  @relation("CategoryToPackage", fields: [categoryId], references: [id])
-    name       String
-    price      Decimal
-    isFeatured Boolean   @default(false)
-    isArchived Boolean   @default(false)
-    sizeId     String
-    size       Size      @relation(fields: [sizeId], references: [id])
-    durationId String
-    duration   Duration  @relation(fields: [durationId], references: [id])
-    images     Image[]
-    orderItems OrderItem[]
-    createdAt  DateTime  @default(now())
-    updatedAt  DateTime  @updatedAt
+    id             String      @id @default(uuid())
+    storeId        String
+    store          Store       @relation("StoreToPackage", fields: [storeId], references: [id])
+    categoryId     String
+    category       Category    @relation("CategoryToPackage", fields: [categoryId], references: [id])
+    name           String
+    price          Decimal
+    isFeatured     Boolean     @default(false)
+    isArchived     Boolean     @default(false)
+    sizeId         String
+    size           Size        @relation(fields: [sizeId], references: [id])
+    durationId     String
+    duration       Duration    @relation(fields: [durationId], references: [id])
+    images         Image[]
+    orderItems     OrderItem[]
+    createdAt      DateTime    @default(now())
+    updatedAt      DateTime    @updatedAt
 
     @@index([storeId])
     @@index([categoryId])
@@ -137,7 +137,7 @@ model Order {
 model OrderItem {
     id        String  @id @default(uuid())
     orderId   String
-    order   Order   @relation(fields: [orderId], references: [id])
+    order     Order   @relation(fields: [orderId], references: [id])
     packageId String
     package   Package @relation(fields: [packageId], references: [id])
 
