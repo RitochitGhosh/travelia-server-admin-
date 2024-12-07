@@ -113,7 +113,7 @@ export const PackageForm: React.FC<PackageFormProps> = ({
       toast.success(toastMessage);
 
       console.log(data);
-    } catch (error) {
+    } catch {
       toast.error("Something went Wrong");
     } finally {
       setLoading(false);
@@ -130,7 +130,7 @@ export const PackageForm: React.FC<PackageFormProps> = ({
 
       router.push(`${params.storeId}/packages`); // Check here
       toast.success("Package Deleted");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.log("[ERROR] ->", error);
 
       toast.error(

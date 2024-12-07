@@ -1,13 +1,11 @@
 "use client";
 
-import * as z from "zod";
-import { useForm } from "react-hook-form";
-import { useState } from "react";
 import axios from "axios";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
-import { useStoreModal } from "@/hooks/use-store-modal";
-import { Modal } from "@/components/ui/modal";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -17,9 +15,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Modal } from "@/components/ui/modal";
+import { useStoreModal } from "@/hooks/use-store-modal";
+import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
-import { error } from "console";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -53,7 +52,7 @@ export const StoreModal = () => {
       // toast.success("Package Created!");
 
       window.location.assign(`/${response.data.id}`); // why using this? -> It will do a hard reloading ensuring the page is properly loaded. (otherwise, the modal would have remained there giving a bad UX)
-    } catch (error) {
+    } catch {
       // console.log("[STORE-MODAL.TSX] ->", error);
       toast.error("Something went wrong.");
     } finally {

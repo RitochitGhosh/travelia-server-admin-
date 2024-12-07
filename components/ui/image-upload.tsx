@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { CldUploadWidget } from "next-cloudinary";
+import { CldUploadWidget, CldUploadResult } from "next-cloudinary"; // Import type for the result
 import { Button } from "./button";
 import { ImagePlus, Trash } from "lucide-react";
 
@@ -25,7 +25,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     setIsMounted(true);
   }, []);
 
-  const onUpload = (result: any) => {
+  // Specify the type of 'result' as CldUploadResult
+  const onUpload = (result: CldUploadResult) => {
     onChange(result.info.secure_url); // Pass uploaded URL to parent
   };
 

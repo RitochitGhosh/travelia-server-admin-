@@ -38,7 +38,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       router.refresh();
 
       toast.success("Duration Deleted");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.log("[ERROR] ->", error);
 
       toast.error(

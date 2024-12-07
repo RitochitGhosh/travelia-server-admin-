@@ -1,4 +1,3 @@
-import { Category } from "./../../../../../node_modules/.prisma/client/index.d";
 import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";

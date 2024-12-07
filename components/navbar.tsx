@@ -1,11 +1,10 @@
 import { UserButton } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 import { MainNav } from "@/components/main-nav";
 import StoreSwithcher from "@/components/store-switcher";
 import prismadb from "@/lib/prismadb";
-import { useEffect, useState } from "react";
 import { ThemeToggle } from "./theme-toggle";
 
 const Navbar = async () => {

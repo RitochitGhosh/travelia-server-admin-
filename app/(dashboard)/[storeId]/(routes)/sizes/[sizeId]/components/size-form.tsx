@@ -1,6 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Billboard, Size } from "@prisma/client";
+import { Size } from "@prisma/client";
 import axios from "axios";
 import { Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
@@ -19,7 +19,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Heading } from "@/components/ui/heading";
-import ImageUpload from "@/components/ui/image-upload";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
@@ -73,7 +72,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
       toast.success(toastMessage);
 
       console.log(data);
-    } catch (error) {
+    } catch {
       toast.error("Something went Wrong");
     } finally {
       setLoading(false);
@@ -90,7 +89,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
 
       router.push(`${params.storeId}/sizes`); // Check here
       toast.success("Size Deleted");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.log("[ERROR] ->", error);
 
       toast.error(

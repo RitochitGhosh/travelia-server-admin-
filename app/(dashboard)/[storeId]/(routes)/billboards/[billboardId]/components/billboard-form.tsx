@@ -92,7 +92,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
       );
       router.refresh();
 
-      router.push(`${params.storeId}/billboards`);   // Check here
+      router.push(`${params.storeId}/billboards`);
       toast.success("Billboard Deleted");
     } catch (error: any) {
       console.log("[ERROR] ->", error);

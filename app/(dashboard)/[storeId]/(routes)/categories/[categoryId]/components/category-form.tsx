@@ -79,7 +79,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({ initialData, billboa
       toast.success(toastMessage);
 
       console.log(data);
-    } catch (error) {
+    } catch {
       toast.error("Something went Wrong");
     } finally {
       setLoading(false);
@@ -96,7 +96,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({ initialData, billboa
 
       router.push(`${params.storeId}/categories`); // Check here
       toast.success("Category Deleted");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.log("[ERROR] ->", error);
 
       toast.error(

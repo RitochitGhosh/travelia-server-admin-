@@ -6,9 +6,8 @@ import { Overview } from "@/components/overview";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
-import prismadb from "@/lib/prismadb";
 import { formatter } from "@/lib/utils";
-import { ArrowUpRight, IndianRupeeIcon, Package, Plus, PlusCircle } from "lucide-react";
+import { ArrowUpRight, IndianRupeeIcon, Package } from "lucide-react";
 
 
 interface DashboardPageProps {

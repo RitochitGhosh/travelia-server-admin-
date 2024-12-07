@@ -72,7 +72,7 @@ export const DurationForm: React.FC<DurationFormProps> = ({ initialData }) => {
       toast.success(toastMessage);
 
       console.log(data);
-    } catch (error) {
+    } catch {
       toast.error("Something went Wrong");
     } finally {
       setLoading(false);
@@ -89,7 +89,7 @@ export const DurationForm: React.FC<DurationFormProps> = ({ initialData }) => {
 
       router.push(`${params.storeId}/durations`); // Check here
       toast.success("Duration Deleted");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.log("[ERROR] ->", error);
 
       toast.error(

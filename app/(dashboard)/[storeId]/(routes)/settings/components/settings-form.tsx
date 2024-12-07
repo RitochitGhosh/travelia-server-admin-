@@ -59,7 +59,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
       toast.success("Destination name updated")
 
       console.log(data);
-    } catch (error) {
+    } catch {
       toast.error("Something went Wrong")
     } finally {
       setLoading(false)
@@ -75,7 +75,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
       router.push("/")
       toast.success("Destination Deleted")
       
-    } catch (error : any) {
+    } catch (error : unknown) {
       console.log('[ERROR] ->', error);
       
       toast.success("Refresh your page to see changes")
