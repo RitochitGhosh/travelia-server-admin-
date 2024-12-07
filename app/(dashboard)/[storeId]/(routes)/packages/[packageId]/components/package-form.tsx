@@ -123,9 +123,7 @@ export const PackageForm: React.FC<PackageFormProps> = ({
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(
-        `/api/${params.storeId}/packages/${params.packageId}`
-      );
+      await axios.delete(`/api/${params.storeId}/packages/${params.packageId}`);
       router.refresh();
 
       router.push(`${params.storeId}/packages`); // Check here
@@ -133,9 +131,7 @@ export const PackageForm: React.FC<PackageFormProps> = ({
     } catch (error: unknown) {
       console.log("[ERROR] ->", error);
 
-      toast.error(
-        "Something went wrong. Try again!"
-      );
+      toast.error("Something went wrong. Try again!");
     } finally {
       setLoading(false);
       setOpen(false);
@@ -336,11 +332,12 @@ export const PackageForm: React.FC<PackageFormProps> = ({
               control={form.control}
               name="isFeatured"
               render={({ field }) => (
-                <FormItem className="flex flex-row space-x-3  space-y-0 items-start rounded-md border p-4">
+                <FormItem className="flex flex-row space-x-3 space-y-0 items-start rounded-md border p-4">
                   <FormControl>
+                    {/* @ts-expect-error: Checkbox component expects a value of type boolean, and TypeScript cannot infer this correctly for the onCheckedChange prop. */}
                     <Checkbox
                       checked={field.value}
-                      onCheckedChange={field.onChange} //@ts-ignore
+                      onCheckedChange={field.onChange}
                     />
                   </FormControl>
                   <div className="space-y-1 leading-none">
@@ -357,11 +354,12 @@ export const PackageForm: React.FC<PackageFormProps> = ({
               control={form.control}
               name="isArchived"
               render={({ field }) => (
-                <FormItem className="flex flex-row space-x-3  space-y-0 items-start rounded-md border p-4">
+                <FormItem className="flex flex-row space-x-3 space-y-0 items-start rounded-md border p-4">
                   <FormControl>
+                    {/* @ts-expect-error: Checkbox component expects a value of type boolean, and TypeScript cannot infer this correctly for the onCheckedChange prop. */}
                     <Checkbox
                       checked={field.value}
-                      onCheckedChange={field.onChange} //@ts-ignore
+                      onCheckedChange={field.onChange}
                     />
                   </FormControl>
                   <div className="space-y-1 leading-none">
