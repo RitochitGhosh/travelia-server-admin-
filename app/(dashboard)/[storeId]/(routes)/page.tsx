@@ -11,13 +11,14 @@ import { ArrowUpRight, IndianRupeeIcon, Package } from "lucide-react";
 
 
 interface DashboardPageProps {
-  params: { storeId: string };
+  params: Promise<{ storeId: string }>;
 }
-const DashBoardPage: React.FC<DashboardPageProps> = async ({ params }) => {
-  const totalRevenue = await getTotalRevenue(params.storeId);
-  const salesCount = await getSalesCount(params.storeId);
-  const packagesCount = await getPackagesCount(params.storeId);
-  const graphRevenue = await getGraphRevenue(params.storeId);
+const DashBoardPage = async ({ params } : DashboardPageProps) => {
+  const awaitedParams = await params;
+  const totalRevenue = await getTotalRevenue(awaitedParams.storeId);
+  const salesCount = await getSalesCount(awaitedParams.storeId);
+  const packagesCount = await getPackagesCount(awaitedParams.storeId);
+  const graphRevenue = await getGraphRevenue(awaitedParams.storeId);
 
   
   return (
