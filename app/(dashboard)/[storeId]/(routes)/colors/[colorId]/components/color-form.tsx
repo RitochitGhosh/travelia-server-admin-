@@ -7,6 +7,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
+import { useState } from "react";
 
 import { AlertModal } from "@/components/modals/alert-modal";
 import { Button } from "@/components/ui/button";
@@ -21,45 +22,47 @@ import {
 import { Heading } from "@/components/ui/heading";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { useState } from "react";
 
 const formSchema = z.object({
   name: z.string().min(1),
-  days: z.string().min(1),
+  days: z.string().regex(/^#([0-9A-F]{3}){1,2}$/i, {
+    message: "Color must be a valid hex code (e.g., #FF0000)",
+  }),
 });
 
-type DurationFormValues = z.infer<typeof formSchema>;
+type ColorFormValues = z.infer<typeof formSchema>;
 
-interface DurationFormProps {
+interface ColorFormProps {
   initialData: Duration | null;
 }
 
-export const DurationForm: React.FC<DurationFormProps> = ({ initialData }) => {
+export const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
   const params = useParams();
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const title = initialData ? "Edit duration" : "Create duration";
-  const description = initialData ? "Edit duration" : "Add a new duration";
-  const toastMessage = initialData ? "Duration Updated." : "Duration created.";
+  const title = initialData ? "Edit color" : "Create color";
+  const description = initialData ? "Edit color" : "Add a new color";
+  const toastMessage = initialData ? "Color Updated." : "Color created.";
   const action = initialData ? "Save Changes" : "Create";
 
-  const form = useForm<DurationFormValues>({
+  const form = useForm<ColorFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
       name: "",
-      days: "",
+      days: "#000000", // Default black color
     },
   });
 
-  const onSubmit = async (data: DurationFormValues) => {
+  const onSubmit = async (data: ColorFormValues) => {
     try {
       setLoading(true);
       if (initialData) {
+        // Still using durations API endpoint
         await axios.patch(
-          `/api/${params.storeId}/durations/${params.durationId}`,
+          `/api/${params.storeId}/durations/${params.colorId}`,
           data
         );
       } else {
@@ -67,11 +70,9 @@ export const DurationForm: React.FC<DurationFormProps> = ({ initialData }) => {
       }
       router.refresh();
 
-      router.push(`/${params.storeId}/durations`);
+      router.push(`/${params.storeId}/colors`);
 
       toast.success(toastMessage);
-
-      console.log(data);
     } catch {
       toast.error("Something went Wrong");
     } finally {
@@ -82,18 +83,19 @@ export const DurationForm: React.FC<DurationFormProps> = ({ initialData }) => {
   const onDelete = async () => {
     try {
       setLoading(true);
+      // Still using durations API endpoint
       await axios.delete(
-        `/api/${params.storeId}/durations/${params.durationId}`
+        `/api/${params.storeId}/durations/${params.colorId}`
       );
       router.refresh();
 
-      router.push(`${params.storeId}/durations`); // Check here
-      toast.success("Duration Deleted");
+      router.push(`/${params.storeId}/colors`);
+      toast.success("Color Deleted");
     } catch (error: unknown) {
       console.log("[ERROR] ->", error);
 
       toast.error(
-        "Make sure you removed all packages with this duration first."
+        "Make sure you removed all products with this color first."
       );
     } finally {
       setLoading(false);
@@ -139,7 +141,7 @@ export const DurationForm: React.FC<DurationFormProps> = ({ initialData }) => {
                   <FormControl>
                     <Input
                       disabled={loading}
-                      placeholder="Duration Name"
+                      placeholder="Color Name"
                       {...field}
                     />
                   </FormControl>
@@ -153,14 +155,21 @@ export const DurationForm: React.FC<DurationFormProps> = ({ initialData }) => {
               name="days"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Number of Days</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={loading}
-                      placeholder="Number of days"
-                      {...field}
+                  <FormLabel>Color Value</FormLabel>
+                  <div className="flex items-center gap-x-4">
+                    <FormControl>
+                      <Input
+                        disabled={loading}
+                        placeholder="#000000"
+                        type="text"  // Use text type instead of color for more control
+                        {...field}
+                      />
+                    </FormControl>
+                    <div 
+                      className="border rounded-full w-8 h-8"
+                      style={{ backgroundColor: field.value }}
                     />
-                  </FormControl>
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}

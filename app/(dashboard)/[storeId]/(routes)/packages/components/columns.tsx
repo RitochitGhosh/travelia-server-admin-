@@ -44,7 +44,7 @@ export const columns: ColumnDef<PackageColumn>[] = [
   },
   {
     accessorKey: "duration",
-    header: "Duration"
+    header: "Color"
   },
   {
     accessorKey: "createdAt",

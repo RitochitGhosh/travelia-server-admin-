@@ -1,17 +1,9 @@
 "use client";
 import { Store } from "@prisma/client";
-import { Check, ChevronsUpDownIcon, MapPin, Navigation2, PlusCircle } from "lucide-react";
+import { Check, ChevronsUpDownIcon, Navigation2, PlusCircle, StoreIcon } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { useStoreModal } from "@/hooks/use-store-modal";
-import { cn } from "@/lib/utils";
-import { useState } from "react";
 import {
   Command,
   CommandEmpty,
@@ -21,6 +13,14 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { useStoreModal } from "@/hooks/use-store-modal";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<
   typeof PopoverTrigger
@@ -60,10 +60,10 @@ export default function StoreSwithcher({
           size={"sm"}
           role="combobox"
           aria-expanded={open}
-          aria-label="Select a Destination"
+          aria-label="Select a Store"
           className={cn("w-[300px] justify-between ", className)}
         >
-          <MapPin className="mr-2 h-4 w-4" />
+          <StoreIcon className="mr-2 h-4 w-4" />
           {currentStore?.label}
           <ChevronsUpDownIcon className="ml-auto h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -99,7 +99,7 @@ export default function StoreSwithcher({
                 }}
               >
                 <PlusCircle className="w-5 h-5 mr-2" />
-                Add a new Destination
+                Add a new Store
               </CommandItem>
             </CommandGroup>
           </CommandList>

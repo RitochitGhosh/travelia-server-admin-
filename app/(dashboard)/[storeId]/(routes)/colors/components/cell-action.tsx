@@ -1,4 +1,4 @@
-"uses client";
+"use client";
 import axios from "axios";
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
@@ -14,10 +14,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { DurationColumn } from "./columns";
+import { ColorColumn } from "./columns";
 
 interface CellActionProps {
-  data: DurationColumn;
+  data: ColorColumn;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -28,21 +28,22 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
-    toast.success("Duration Id copied to the clipboard.");
+    toast.success("Color Id copied to the clipboard.");
   };
 
   const onDelete = async () => {
     try {
       setLoading(true);
+      // Still using durations endpoint
       await axios.delete(`/api/${params.storeId}/durations/${data.id}`);
       router.refresh();
 
-      toast.success("Duration Deleted");
+      toast.success("Color Deleted");
     } catch (error: unknown) {
       console.log("[ERROR] ->", error);
 
       toast.error(
-        "Make sure you removed all packages with this duration first."
+        "Make sure you removed all products with this color first."
       );
     } finally {
       setLoading(false);
@@ -69,7 +70,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem
             onClick={() =>
-              router.push(`/${params.storeId}/durations/${data.id}`)
+              router.push(`/${params.storeId}/colors/${data.id}`)
             }
           >
             <Edit className="mr-2 w-4 h-4" />

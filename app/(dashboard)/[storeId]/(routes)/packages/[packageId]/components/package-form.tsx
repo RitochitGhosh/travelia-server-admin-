@@ -267,7 +267,7 @@ export const PackageForm: React.FC<PackageFormProps> = ({
               name="sizeId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Capacity</FormLabel>
+                  <FormLabel>Size</FormLabel>
                   <Select
                     disabled={loading}
                     onValueChange={field.onChange}
@@ -300,7 +300,7 @@ export const PackageForm: React.FC<PackageFormProps> = ({
               name="durationId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Duration</FormLabel>
+                  <FormLabel>Colour</FormLabel>
                   <Select
                     disabled={loading}
                     onValueChange={field.onChange}
@@ -311,7 +311,7 @@ export const PackageForm: React.FC<PackageFormProps> = ({
                       <SelectTrigger>
                         <SelectValue
                           defaultValue={field.value}
-                          placeholder="Select a Duration"
+                          placeholder="Select a colour"
                         ></SelectValue>
                       </SelectTrigger>
                     </FormControl>
@@ -334,10 +334,12 @@ export const PackageForm: React.FC<PackageFormProps> = ({
               render={({ field }) => (
                 <FormItem className="flex flex-row space-x-3 space-y-0 items-start rounded-md border p-4">
                   <FormControl>
-                    {/* @ts-expect-error: Checkbox component expects a value of type boolean, and TypeScript cannot infer this correctly for the onCheckedChange prop. */}
+                  
                     <Checkbox
                       checked={field.value}
-                      onCheckedChange={field.onChange}
+                      onCheckedChange={(checked) =>
+                        field.onChange(checked === true)
+                      }
                     />
                   </FormControl>
                   <div className="space-y-1 leading-none">
@@ -356,10 +358,12 @@ export const PackageForm: React.FC<PackageFormProps> = ({
               render={({ field }) => (
                 <FormItem className="flex flex-row space-x-3 space-y-0 items-start rounded-md border p-4">
                   <FormControl>
-                    {/* @ts-expect-error: Checkbox component expects a value of type boolean, and TypeScript cannot infer this correctly for the onCheckedChange prop. */}
+                    
                     <Checkbox
                       checked={field.value}
-                      onCheckedChange={field.onChange}
+                      onCheckedChange={(checked) =>
+                        field.onChange(checked === true)
+                      }
                     />
                   </FormControl>
                   <div className="space-y-1 leading-none">

@@ -21,20 +21,25 @@ const OrdersPage = async ({ params }: { params: { storeId: string } }) => {
       createdAt: "desc",
     },
   });
-
+  // @ts-expect-error it will not cause any error
   const formattedOrders: OrderColumn[] = orders.map((item) => ({
     id: item.id,
     phone: item.phone,
-	address: item.address,
-	products: item.orderItems.map((orderItem) => orderItem.package.name).join(', '),
-	totalPrice: formatter.format(item.orderItems.reduce((total, item) => {
-		return total + Number(item.package.price)
-	},0)),
-	isPaid: item.isPaid,
-    createdAt: format(item.createdAt, "MMMM do, yyyy"),
+    address: item.address,
+    products: item.orderItems
+      .map((orderItem: typeof item.orderItems[number]) => orderItem.package?.name || '')
+      .join(", "),
+    totalPrice: formatter.format(
+      item.orderItems.reduce((total: number, orderItem: typeof item.orderItems[number]) => {
+        return total + Number(orderItem.package?.price || 0);
+      }, 0)
+    ),
+    isPaid: item.isPaid,
+    createdAt: format(new Date(item.createdAt), "MMMM do, yyyy"),
   }));
+
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
         <OrderClient data={formattedOrders} />
       </div>

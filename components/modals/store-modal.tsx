@@ -62,8 +62,8 @@ export const StoreModal = () => {
 
   return (
     <Modal
-      title="Create Destination"
-      description="Add a new destination to manage tours and packages"
+      title="Create Store"
+      description="Add a new store to manage your products"
       isOpen={storeModal.isOpen}
       onClose={storeModal.onClose}
     >
@@ -80,7 +80,7 @@ export const StoreModal = () => {
                     <FormControl>
                       <Input
                         disabled={loading}
-                        placeholder="Travel Destination"
+                        placeholder="eg. My clothing store"
                         {...field}
                       />
                     </FormControl>

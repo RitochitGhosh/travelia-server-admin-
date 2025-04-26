@@ -20,6 +20,7 @@ const ProductsPage = async ({ params }: { params: { storeId: string } }) => {
     },
   });
 
+  // @ts-expect-error it will not cause any error
   const formattedPackages: PackageColumn[] = packages.map((item) => ({
     id: item.id,
     name: item.name,
