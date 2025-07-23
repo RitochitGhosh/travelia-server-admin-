@@ -5,16 +5,15 @@ import prismadb from "@/lib/prismadb";
 import { SettingsForm } from "./components/settings-form";
 
 interface SettingsPageProps {
-  params: {
+  params: Promise<{
     storeId: string;
-  };
+  }>;
 }
 
 const SettingsPage: React.FC<SettingsPageProps> = async ({ params }) => {
+  const { storeId } = await params;
   const { userId } = await auth();
   if (!userId) redirect("/sign-in");
-
-  const storeId = await params.storeId;
 
   const store = await prismadb.store.findFirst({
     where: {

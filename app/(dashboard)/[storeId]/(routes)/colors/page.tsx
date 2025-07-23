@@ -4,11 +4,16 @@ import { format } from "date-fns";
 import { ColorsClient } from "./components/client";
 import { ColorColumn } from "./components/columns";
 
-const ColorsPage = async ({ params }: { params: { storeId: string } }) => {
+const ColorsPage = async ({
+	params
+}: {
+	params: Promise<{ storeId: string }>
+}) => {
+  const { storeId } = await params;
   // Still using the duration table in the backend
   const colors = await prismadb.duration.findMany({
     where: {
-      storeId: params.storeId,
+      storeId: storeId,
     },
     orderBy: {
       createdAt: "desc",
