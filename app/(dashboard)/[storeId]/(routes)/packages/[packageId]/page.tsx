@@ -4,12 +4,13 @@ import { PackageForm } from "./components/package-form";
 const PackagePage = async ({
   params,
 }: {
-  params: { packageId: string; storeId: string };
+  params: Promise<{ packageId: string; storeId: string }>;
 }) => {
+  const { packageId, storeId } = await params;
   const packagee = await prismadb.package.findUnique({
     // package is a reserved word in React.Strictmode
     where: {
-      id: params.packageId,
+      id: packageId,
     },
     include: {
       images: true,
@@ -18,19 +19,19 @@ const PackagePage = async ({
 
   const categories = await prismadb.category.findMany({
     where: {
-      storeId: params.storeId,
+      storeId: storeId,
     },
   });
 
   const sizes = await prismadb.size.findMany({
     where: {
-      storeId: params.storeId,
+      storeId: storeId,
     },
   });
 
   const durations = await prismadb.duration.findMany({
     where: {
-      storeId: params.storeId,
+      storeId: storeId,
     },
   });
 
