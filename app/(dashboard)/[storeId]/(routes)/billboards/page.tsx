@@ -18,8 +18,7 @@ const BillBoardsPage = async ({
 			createdAt: "desc"
 		}
 	})
-
-	// @ts-expect-error it will not cause any error
+	
 	const formattedBillboards: BillboardColumn[] = billboards.map((item) => ({
 		id: item.id,
 		label: item.label,

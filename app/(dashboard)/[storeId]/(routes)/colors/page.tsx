@@ -20,7 +20,6 @@ const ColorsPage = async ({
     },
   });
 
-  // @ts-expect-error it will not cause any error
   const formattedColors: ColorColumn[] = colors.map((item) => ({
     id: item.id,
     name: item.name,

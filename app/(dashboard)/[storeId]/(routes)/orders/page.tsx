@@ -26,7 +26,6 @@ const OrdersPage = async ({
       createdAt: "desc",
     },
   });
-  // @ts-expect-error it will not cause any error
   const formattedOrders: OrderColumn[] = orders.map((item) => ({
     id: item.id,
     phone: item.phone,

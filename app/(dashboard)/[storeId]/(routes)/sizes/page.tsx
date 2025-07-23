@@ -18,7 +18,7 @@ const SizesPage = async ({
       createdAt: "desc",
     },
   });
-  // @ts-expect-error leave it
+  
   const formattedSizes: SizeColumn[] = sizes.map((item) => ({
     id: item.id,
     name: item.name,
