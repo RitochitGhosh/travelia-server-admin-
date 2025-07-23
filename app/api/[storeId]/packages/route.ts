@@ -5,9 +5,10 @@ import prismadb from "@/lib/prismadb";
 
 export async function POST(
   req: Request,
-  { params }: { params: { storeId: string } }
+  { params }: { params: Promise<{ storeId: string }> }
 ) {
   try {
+    const { storeId } = await params;
     const { userId } = await auth(); // This must be awaited as per latest clerk docs
     const body = await req.json();
     console.log("[Check_STORES_POST] ->", body);
@@ -23,12 +24,10 @@ export async function POST(
       isArchived,
     } = body;
 
-    const storeId = await params.storeId;
 
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 401 });
     }
-
     
     if (!name) {
       return new NextResponse("Name is required", { status: 400 });
@@ -49,7 +48,7 @@ export async function POST(
       return new NextResponse("Duration Id is required", { status: 400 });
     }
 
-    if (!params.storeId) {
+    if (!storeId) {
       return new NextResponse("Package Id is required", { status: 400 });
     }
 
@@ -63,7 +62,7 @@ export async function POST(
       return new NextResponse("Unauthorized", { status: 403 });
     }
 
-    const packagee = await prismadb.package.create({ // packagee is a reserved word
+    const packagee = await prismadb.package.create({ // package is a reserved word
       data: {
         name,
         price,
@@ -94,7 +93,7 @@ export async function POST(
 
 export async function GET(
   req: Request,
-  { params }: { params: { storeId: string } }
+  { params }: { params: Promise<{ storeId: string }> }
 ) {
   try {
     const { searchParams } = new URL(req.url);
@@ -102,14 +101,15 @@ export async function GET(
     const sizeId = searchParams.get("sizeId") || undefined;
     const durationId = searchParams.get("durationId") || undefined;
     const isFeatured = searchParams.get("isFeatured");
+    const { storeId }  = await params;
     
-    if (!params.storeId) {
+    if (!storeId) {
       return new NextResponse("Package Id is required", { status: 400 });
     }
 
     const packages = await prismadb.package.findMany({
       where: {
-        storeId: params.storeId,
+        storeId: storeId,
         categoryId,
         sizeId,
         durationId,

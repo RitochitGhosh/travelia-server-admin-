@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(
   req: Request,
-  { params }: { params: { storeId: string } }
+  { params }: { params: Promise<{ storeId: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -12,7 +12,7 @@ export async function POST(
 
     const body = await req.json();
     const { name, days } = body;
-    const { storeId } = params;
+    const { storeId } = await params;
 
     if (!name) {
       return new NextResponse("Name is required", { status: 400 });
@@ -52,10 +52,10 @@ export async function POST(
 
 export async function GET(
   req: Request,
-  { params }: { params: { storeId: string } }
+  { params }: { params: Promise<{ storeId: string }> }
 ) {
   try {
-    const { storeId } = params;
+    const { storeId } = await params;
 
     if (!storeId) {
       return new NextResponse("Store ID is required", { status: 400 });

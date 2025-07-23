@@ -5,10 +5,10 @@ import prismadb from "@/lib/prismadb";
 
 export async function GET(
   req: Request,
-  { params }: { params: { packageId: string } }
+  { params }: { params: Promise<{ packageId: string }> }
 ) {
   try {
-    const packageId = await params.packageId;
+    const { packageId } = await params;
     if (!packageId) {
       return new NextResponse("PackageId is required", { status: 400 });
     }
@@ -35,7 +35,7 @@ export async function GET(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { storeId: string; packageId: string } }
+  { params }: { params: Promise<{ storeId: string; packageId: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -134,7 +134,7 @@ export async function PATCH(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { storeId: string; packageId: string } }
+  { params }: { params: Promise<{ storeId: string; packageId: string }> }
 ) {
   try {
     const { userId } = await auth();

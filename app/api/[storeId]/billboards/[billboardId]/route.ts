@@ -4,10 +4,10 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-  { params }: { params: { billboardId: string } }
+  { params }: { params: Promise<{ billboardId: string }> }
 ) {
   try {
-    const billboardId = await params.billboardId;
+    const { billboardId } = await params;
     if (!billboardId) {
       return new NextResponse("Category Id is required", { status: 400 })
     }
@@ -29,7 +29,7 @@ export async function GET(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { storeId: string; billboardId: string } }
+  { params }: { params: Promise<{ storeId: string; billboardId: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -82,7 +82,7 @@ export async function PATCH(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { storeId: string; billboardId: string } }
+  { params }: { params: Promise<{ storeId: string; billboardId: string }> }
 ) {
   try {
     const { userId } = await auth();

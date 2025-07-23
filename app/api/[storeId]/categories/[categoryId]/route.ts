@@ -4,10 +4,10 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-  { params }: { params: { categoryId: string } }
+  { params }: { params: Promise<{ categoryId: string }> }
 ) {
   try {
-    const categoryId = await params.categoryId;
+    const { categoryId } = await params;
 
     if (!categoryId) {
       return new NextResponse("Category Id is required", { status: 400 });
@@ -32,13 +32,13 @@ export async function GET(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { storeId: string; categoryId: string } }
+  { params }: { params: Promise<{ storeId: string; categoryId: string }> }
 ) {
   try {
     const { userId } = await auth();
     if (!userId) return new NextResponse("Unauthenticated", { status: 401 });
 
-    const { storeId, categoryId } = params;
+    const { storeId, categoryId } = await params;
 
     const body = await req.json();
     const { name, billboardId } = body;
@@ -85,7 +85,7 @@ export async function PATCH(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { storeId: string; categoryId: string } }
+  { params }: { params: Promise<{ storeId: string; categoryId: string }> }
 ) {
   try {
     const { userId } = await auth();

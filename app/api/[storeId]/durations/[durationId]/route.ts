@@ -4,10 +4,10 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-  { params }: { params: { durationId: string } }
+  { params }: { params: Promise<{ durationId: string }> }
 ) {
   try {
-    const { durationId } = params;
+    const { durationId } = await params;
 
     if (!durationId) {
       return new NextResponse("Duration ID is required", { status: 400 });
@@ -28,13 +28,13 @@ export async function GET(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { storeId: string; durationId: string } }
+  { params }: { params: Promise<{ storeId: string; durationId: string }> }
 ) {
   try {
     const { userId } = await auth();
     if (!userId) return new NextResponse("Unauthenticated", { status: 401 });
 
-    const { storeId, durationId } = params;
+    const { storeId, durationId } = await params;
 
     const body = await req.json();
     const { name, days} = body;
@@ -79,13 +79,13 @@ export async function PATCH(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { storeId: string; durationId: string } }
+  { params }: { params: Promise<{ storeId: string; durationId: string }> }
 ) {
   try {
     const { userId } = await auth();
     if (!userId) return new NextResponse("Unauthenticated", { status: 401 });
 
-    const { storeId, durationId } = params;
+    const { storeId, durationId } = await params;
 
     if (!storeId) {
       return new NextResponse("Store ID is required", { status: 400 });
